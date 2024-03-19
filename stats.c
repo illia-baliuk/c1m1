@@ -9,13 +9,13 @@
  *
  *****************************************************************************/
 /**
- * @file <Add File Name> 
- * @brief <Add Brief Description Here >
+ * @file stats.c
+ * @brief statistical analytics
  *
- * <Add Extended Description Here>
+ * A simple application that performs statistical analytics on a dataset.
  *
- * @author <Add FirsName LastName>
- * @date <Add date >
+ * @author Illia Baliuk
+ * @date 19 March 2024
  *
  */
 
@@ -35,9 +35,91 @@ void main() {
                               201,   6,  12,  60,   8,   2,   5,  67,
                                 7,  87, 250, 230,  99,   3, 100,  90};
 
-  /* Other Variable Declarations Go Here */
-  /* Statistics and Printing Functions Go Here */
+  printf("Source array:\n");
+  print_array(test, SIZE);
+  print_statistics(test, SIZE);
+  printf("\nSorted array:\n");
+  print_array(test, SIZE);
 
 }
 
-/* Add other Implementation File Code Here */
+
+void print_statistics(unsigned char* pArray, unsigned int size){
+  printf("Statistics of the array:\n");
+  printf(" - Median: %u \n", find_median(pArray, size));
+  printf(" - Mean: %u \n", find_mean(pArray, size));
+  printf(" - Maximum: %u \n", find_maximum(pArray, size));
+  printf(" - Minuimum: %u \n", find_minimum(pArray, size));
+}
+
+
+void print_array(unsigned char* pArray, unsigned int size){
+  printf("{");
+  for (unsigned int i = 0; i < size; i++){
+    printf("%u", pArray[i]);
+    if (i < (size -1)) printf(", ");
+  }
+  printf("}\n\n");
+}
+
+
+unsigned char find_median(unsigned char* pArray, unsigned int size){
+  unsigned char temp;
+  sort_array(pArray, size);
+  temp = (size % 2 == 1) ? pArray[size/2]: (pArray[(size/2)-1] + pArray[size/2])/2;
+  return temp;
+}
+
+
+unsigned char find_mean(unsigned char* pArray, unsigned int size){
+  long int sum = 0;
+  for (unsigned int  i = 0; i < size; i++) {
+    sum += pArray[i];
+  }
+  return sum / size;
+}
+
+
+unsigned char find_maximum(unsigned char* pArray, unsigned int size){
+  unsigned char maximum = pArray[0];
+  for(unsigned int i=1; i<size ; i++)
+  {
+     if (maximum < pArray[i])
+     {
+       maximum = pArray[i];
+     }
+  }
+  return maximum;
+}
+
+
+unsigned char find_minimum(unsigned char* pArray, unsigned int size){
+  unsigned char minimum = pArray[0];
+  for(unsigned int i=1; i<size ; i++)
+  {
+    if (minimum > pArray[i])
+    {
+      minimum = pArray[i];
+    }
+  }
+  return minimum;
+}
+
+
+void sort_array(unsigned char* pArray, unsigned int size){
+  unsigned int j, k;
+  unsigned char temp;
+  for( j = 0 ; j < size-1 ; j++ )
+  {
+    for( k = size-1 ; k > j ; k-- )
+    {
+      if(pArray[k]>pArray[k-1])
+      {
+        temp = pArray[k-1];
+        pArray[k-1] = pArray[k];
+        pArray[k] = temp;
+      }
+    }
+  }
+}
+
