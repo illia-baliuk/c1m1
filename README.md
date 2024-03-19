@@ -1,3 +1,4 @@
 Illia Baliuk
 
-The first assignment of the course is developed
+The first assignment of the course is developed 
+
